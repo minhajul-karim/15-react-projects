@@ -1,5 +1,6 @@
 # 15 React Projects
 
-15 React projects to solidify React skills.
+**15 React projects to solidify React skills.**
 
-1. Birthday Reminder.
+1. [Birthday Reminder](https://birthday-reminder-mk.netlify.app/).
+2. [Tours](https://tours-mk.netlify.app/)
