@@ -8,3 +8,4 @@
 4. [Accordion](https://accordion-mk.netlify.app/)
 5. [Restaurant](https://restaurant-mk.netlify.app/)
 6. [Experience Tabs](https://tabs-mk.netlify.app/)
+7. [Review Slider](https://slider-mk.netlify.app/)

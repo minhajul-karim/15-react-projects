@@ -1,5 +1,7 @@
+import Slider from './Slider'
+
 function App() {
-  return <p>Slider</p>
+  return <Slider />
 }
 
 export default App
