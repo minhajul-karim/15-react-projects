@@ -9,3 +9,4 @@
 5. [Restaurant](https://restaurant-mk.netlify.app/)
 6. [Experience Tabs](https://tabs-mk.netlify.app/)
 7. [Review Slider](https://slider-mk.netlify.app/)
+8. [Lorem Ipsum Generator](https://lorem-ipsum-mk.netlify.app/)
