@@ -13,3 +13,4 @@
 9. [Color Generator](https://colors-mk.netlify.app/)
 10. [Groceries](https://groceries-mk.netlify.app/)
 11. [Navbar](https://navbar-mk.netlify.app/)
+12. [Sidebar](https://sidebar-mk.netlify.app/)
