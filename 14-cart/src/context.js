@@ -1,71 +1,12 @@
 import React, { useState, useContext, useReducer, useEffect } from 'react'
-
-// Dispatch actions
-const ACTIONS = {
-  UPDATE_CART: 'update-cart-items',
-  CLEAR_CART: 'delete-cart-items',
-  REMOVE: 'remove-item',
-  INCREMENT: 'increment',
-  DECREMENT: 'decrement',
-}
-
-// Get total price
-const getTotal = (items) =>
-  items.reduce((accumulator, currentVal) => accumulator + parseFloat(currentVal.price), 0)
-
-const removeSingleProduct = (items, id) => items.filter((item) => item.id !== id)
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case ACTIONS.UPDATE_CART: {
-      const { updatedItems } = action.payload
-      return {
-        ...state,
-        cartItems: updatedItems,
-        total: getTotal(updatedItems),
-      }
-    }
-    case ACTIONS.CLEAR_CART:
-      return { ...state, cartItems: [], total: 0, amount: 0 }
-    case ACTIONS.REMOVE: {
-      const updatedItems = removeSingleProduct(state.cartItems, action.payload.productId)
-      return {
-        ...state,
-        cartItems: updatedItems,
-        total: getTotal(updatedItems),
-      }
-    }
-    case ACTIONS.INCREMENT: {
-      const { productId } = action.payload
-      const updatedItems = state.cartItems.map((item) => {
-        if (item.id === productId)
-          return {
-            ...item,
-            amount: item.amount + 1,
-          }
-        return item
-      })
-      return { ...state, cartItems: updatedItems }
-    }
-    case ACTIONS.DECREMENT: {
-      const { productId } = action.payload
-      const updatedItems = state.cartItems.map((item) => {
-        if (item.id === productId && item.amount > 1) return { ...item, amount: item.amount - 1 }
-        return item
-      })
-      return { ...state, cartItems: updatedItems }
-    }
-    default:
-      return state
-  }
-}
+import { ACTIONS, reducer } from './reducer'
 
 export const AppContext = React.createContext()
 
 export const AppProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([])
   const initialState = {
-    loading: false,
+    loading: true,
     cartItems,
     total: 0,
     amount: 0,
@@ -89,13 +30,9 @@ export const AppProvider = ({ children }) => {
     dispatch({ type: ACTIONS.REMOVE, payload: { productId } })
   }
 
-  // Increment amount of product
-  const increment = (productId) => {
-    dispatch({ type: ACTIONS.INCREMENT, payload: { productId } })
-  }
-
-  const decrement = (productId) => {
-    dispatch({ type: ACTIONS.DECREMENT, payload: { productId } })
+  // Increment-decrement amount
+  const changeAmount = (productId, changeType) => {
+    dispatch({ type: ACTIONS.CHANGE_AMOUNT, payload: { productId, changeType } })
   }
 
   // Fetch cart data
@@ -112,14 +49,31 @@ export const AppProvider = ({ children }) => {
       })
   }, [cartItems])
 
+  // Calculate total price and amount of products
+  useEffect(() => {
+    const reducedItems = state.cartItems.reduce(
+      (accumulator, curVal) => {
+        const { price, amount } = curVal
+        accumulator.totalPrice += parseFloat(price) * amount
+        accumulator.totalAmount += amount
+        return accumulator
+      },
+      { totalPrice: 0, totalAmount: 0 }
+    )
+    const { totalPrice, totalAmount } = reducedItems
+    dispatch({
+      type: ACTIONS.UPDATE_AMOUNT_AND_PRICE,
+      payload: { totalPrice: totalPrice.toFixed(2), totalAmount },
+    })
+  }, [state.cartItems])
+
   return (
     <AppContext.Provider
       value={{
         ...state,
         clearCart,
         remove,
-        increment,
-        decrement,
+        changeAmount,
       }}
     >
       {children}
