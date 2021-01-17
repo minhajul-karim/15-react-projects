@@ -1,11 +1,12 @@
 import React from 'react'
-import CocktailList from '../components/CocktailList'
+import FoodList from '../components/FoodList'
 import SearchForm from '../components/SearchForm'
 
 const Home = () => (
-  <div>
-    <h2>home page</h2>
-  </div>
+  <main>
+    <SearchForm />
+    <FoodList />
+  </main>
 )
 
 export default Home

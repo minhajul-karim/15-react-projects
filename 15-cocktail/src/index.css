@@ -166,7 +166,7 @@ Navbar
   color: var(--primaryColor);
 }
 .logo {
-  width: 12rem;
+  width: 5rem;
 }
 /* 
 ====== 
@@ -302,6 +302,7 @@ Form
   border-radius: var(--mainBorderRadius);
   padding: 0.5rem;
   font-size: 1.2rem;
+  margin-top: 1.2rem;
 }
 /* 
 ====== 
