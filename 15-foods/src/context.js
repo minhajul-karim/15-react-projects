@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
-// const url = ''
 const AppContext = React.createContext()
 
 const AppProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const [searchText, setSearchText] = useState('')
   const [foods, setFoods] = useState([])
   const [copyOfFoods, setCopyOfFoods] = useState([])
@@ -12,13 +12,14 @@ const AppProvider = ({ children }) => {
   const fetchData = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('https://www.themealdb.com/api/json/v1/1/categories.php')
+      const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?f=b')
       const data = await response.json()
-      setFoods(data.categories)
-      setCopyOfFoods(data.categories)
+      setFoods(data.meals)
+      setCopyOfFoods(data.meals)
       setIsLoading(false)
     } catch (error) {
-      throw Error('Fetch failed')
+      setHasError(true)
+      throw new Error('Fetch failed')
     }
   }
 
@@ -30,7 +31,7 @@ const AppProvider = ({ children }) => {
     if (searchText.length > 0) {
       const formatedText = searchText.toLowerCase()
       const filteredFoods = copyOfFoods.filter((food) =>
-        food.strCategory.toLowerCase().includes(formatedText)
+        food.strMeal.toLowerCase().includes(formatedText)
       )
       setFoods(filteredFoods)
     } else {
@@ -39,7 +40,9 @@ const AppProvider = ({ children }) => {
   }, [searchText, copyOfFoods])
 
   return (
-    <AppContext.Provider value={{ isLoading, searchText, setSearchText, foods }}>
+    <AppContext.Provider
+      value={{ hasError, isLoading, setIsLoading, searchText, setSearchText, foods }}
+    >
       {children}
     </AppContext.Provider>
   )

@@ -17,7 +17,7 @@ Variables
   --mainRed: #bd0303;
   --mainTransition: all 0.3s linear;
   --mainSpacing: 0.3rem;
-  --lightShadow: 2px 5px 3px 0px rgba(0, 0, 0, 0.5);
+  --lightShadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.5);
   --darkShadow: 4px 10px 5px 0px rgba(0, 0, 0, 0.5);
   --mainBorderRadius: 0.25rem;
   --smallWidth: 85vw;
@@ -136,7 +136,6 @@ Navbar
   height: 5rem;
   display: flex;
   align-items: center;
-  border-bottom: 2px solid var(--primaryColor);
   box-shadow: var(--lightShadow);
 }
 .nav-center {
@@ -203,7 +202,7 @@ Cocktails List
 */
 
 .section {
-  padding: 5rem 0;
+  padding: 2rem 0;
 }
 .section-title {
   font-size: 2rem;
@@ -273,6 +272,7 @@ Form
 */
 .search {
   margin-top: 1rem;
+  margin-bottom: 3rem;
   padding-bottom: 0;
 }
 
@@ -344,12 +344,17 @@ Cocktail
     display: grid;
     grid-template-columns: 2fr 3fr;
     gap: 3rem;
-    align-items: center;
+    /* align-items: center; */
   }
   .drink-info {
     padding-top: 0;
   }
 }
+
+.circular-progress {
+  text-align: center;
+}
+
 .loader,
 .loader:before,
 .loader:after {
